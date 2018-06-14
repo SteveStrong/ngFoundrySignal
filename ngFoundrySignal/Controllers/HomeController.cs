@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ngFoundrySignal
 {
+
     public class HomeController : Controller
     {
         [Route("home/index")]

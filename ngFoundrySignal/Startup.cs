@@ -35,9 +35,29 @@ namespace ngFoundrySignal
             });
 
 
+
+
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
+
+
+            services.AddCors(options => {
+                options.AddPolicy("allowAny", x => {
+                    x.AllowAnyHeader();
+                    x.AllowAnyMethod();
+                    x.AllowAnyOrigin();
+                });
+            });
+
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info {
+                c.SwaggerDoc("v1", new Info
+                {
                     Title = "ngFoundrySignal",
                     Version = "v1",
                     Description = "Full API to support ngFoundry collaberation",
@@ -55,25 +75,6 @@ namespace ngFoundrySignal
                     }
                 });
             });
-
-            services.AddSignalR(options =>
-            {
-                //options.Hubs.EnableDetailedErrors = true;
-            });
-
-
-            services.AddCors(options => {
-                options.AddPolicy("allowAny", x => {
-                    x.AllowAnyHeader();
-                    x.AllowAnyMethod();
-                    x.AllowAnyOrigin();
-                });
-            });
-
-            // Inject an implementation of ISwaggerProvider with defaulted settings applied
-            //services.AddSwaggerGen();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

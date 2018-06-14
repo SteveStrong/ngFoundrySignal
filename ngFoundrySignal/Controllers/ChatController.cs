@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace ngFoundrySignal
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class ChatController : Controller
     {
 
