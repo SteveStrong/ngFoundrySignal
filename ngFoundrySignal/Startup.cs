@@ -97,6 +97,8 @@ namespace ngFoundrySignal
             });
 
             app.UseHttpsRedirection();
+            app.UseDefaultFiles(); 
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseCors("allowAny");
