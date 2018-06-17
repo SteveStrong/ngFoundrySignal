@@ -6,21 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ngFoundrySignal
 {
-
+    [Route("[controller]")]
+    [ApiController]
     public class HomeController : Controller
     {
-        [Route("home/index")]
-
+        [HttpGet("index")]
         public IActionResult Index()
         {
             return Redirect(Url.Content("~/index.html"));
         }
 
+        [HttpGet("start")]
         public IActionResult Start()
         {
             return Redirect(Url.Content("~/Start.html"));
         }
 
+        [HttpGet("doc/{id}")]
         public IActionResult Doc(string id)
         {
             if (id.EndsWith("knt", true, System.Globalization.CultureInfo.DefaultThreadCurrentCulture))
@@ -30,33 +32,32 @@ namespace ngFoundrySignal
 
             return Index();
         }
-
+        [HttpGet("knowtshare/{id}")]
         public IActionResult KnowtShare(string id)
         {
             return Redirect(Url.Content("~/KnowtView.html?session=" + id));
         }
 
-        public IActionResult Knowtify(string id)
-        {
-            return Redirect(Url.Content("~/Knowtify.html?session=" + id));
-        }
+        // public IActionResult Knowtify(string id)
+        // {
+        //     return Redirect(Url.Content("~/Knowtify.html?session=" + id));
+        // }
 
-        public IActionResult Diagram()
-        {
-            return Redirect(Url.Content("~/Diagram.html"));
-        }
+        // public IActionResult Diagram()
+        // {
+        //     return Redirect(Url.Content("~/Diagram.html"));
+        // }
 
 
+        // public IActionResult Invitations(string id)
+        // {
+        //     return Redirect(Url.Content("~/Invitations.html?id=" + id));
+        // }
 
-        public IActionResult Invitations(string id)
-        {
-            return Redirect(Url.Content("~/Invitations.html?id=" + id));
-        }
-
-        public IActionResult Accentances(string id)
-        {
-            return Redirect(Url.Content("~/Accentances.html?id=" + id));
-        }
+        // public IActionResult Accentances(string id)
+        // {
+        //     return Redirect(Url.Content("~/Accentances.html?id=" + id));
+        // }
 
     }
 }

@@ -28,13 +28,13 @@ namespace ngFoundrySignal
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
 
 
             services.AddSignalR(options =>
@@ -52,8 +52,6 @@ namespace ngFoundrySignal
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
@@ -68,11 +66,11 @@ namespace ngFoundrySignal
                         Email = string.Empty,
                         Url = "https://twitter.com/SteveStrong"
                     },
-                    License = new License
-                    {
-                        Name = "Use under LICX",
-                        Url = "https://example.com/license"
-                    }
+                    // License = new License
+                    // {
+                    //     Name = "Use under LICX",
+                    //     Url = "https://example.com/license"
+                    // }
                 });
             });
         }
@@ -89,10 +87,19 @@ namespace ngFoundrySignal
                 app.UseHsts();
             }
 
+            // https://github.com/domaindrivendev/Swashbuckle.AspNetCore
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ngFoundrySignal API V1");
+                //c.RoutePrefix =  string.Empty;
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseCors("CorsPolicy");
+            app.UseCors("allowAny");
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ChatHub>("/chathub");
@@ -101,16 +108,6 @@ namespace ngFoundrySignal
 
 
             app.UseMvc();
-
-            //https://github.com/domaindrivendev/Swashbuckle.AspNetCore
-            app.UseSwagger();
-
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ngFoundrySignal API V1");
-                c.RoutePrefix = string.Empty;
-            });
-
 
         }
     }

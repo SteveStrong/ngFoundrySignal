@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace ngFoundrySignal
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ChatController : Controller
     {
@@ -22,15 +22,15 @@ namespace ngFoundrySignal
         {
             _chatHubContext = context;
         }
-        [HttpGet()]
-        public IActionResult Get()
+        [HttpGet("SayHello")]
+        public IActionResult SayHello()
         {
             //broadcast message to chat
             _chatHubContext.Clients.All.SendAsync("send", "Hello from the server");
             return Ok();
         }
-        [HttpGet("{id}")]
-        public IActionResult Get(string message)
+        [HttpGet("{message}")]
+        public IActionResult Send(string message)
         {
             //broadcast message to chat
             _chatHubContext.Clients.All.SendAsync("send", message);
@@ -39,10 +39,10 @@ namespace ngFoundrySignal
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody]string value)
+        public IActionResult SendAll([FromBody]string message)
         {
             //broadcast message to chat
-            _chatHubContext.Clients.All.SendAsync("send", value);
+            _chatHubContext.Clients.All.SendAsync("send", message);
             return Ok();
         }
     }
