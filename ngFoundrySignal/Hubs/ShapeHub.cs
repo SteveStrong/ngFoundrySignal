@@ -11,7 +11,7 @@ namespace ngFoundrySignal
     {
         public Task SayHello()
         {
-            return Clients.All.SendAsync("hello");
+            return Clients.All.SendAsync("hello from shapehub");
         }
 
         public Task Send(string name, string message)
@@ -22,6 +22,12 @@ namespace ngFoundrySignal
 
 
         private static readonly ConcurrentDictionary<string, object> _connections = new ConcurrentDictionary<string, object>();
+
+        public Task ClientCount()
+        {
+            var result = Clients.All.SendAsync("clientCount", _connections.Count, "groupCount", this.GroupCount.Count);
+             return result;
+        }
 
         #region Connection Methods
         public override Task OnConnectedAsync()
@@ -69,12 +75,12 @@ namespace ngFoundrySignal
             return count;
         }
 
-        //public void AuthorSessionCount(string sessionKey, string userId)
-        //{
-        //    //should only callback if this session key has other players
-        //    var total = SessionCount(sessionKey);
-        //    Clients.Caller.playerSessionCount(sessionKey, userId, total);
-        //}
+        public void AuthorSessionCount(string sessionKey, string userId)
+        {
+           //should only callback if this session key has other players
+           var total = SessionCount(sessionKey);
+           Clients.Caller.SendAsync("playerSessionCount", sessionKey, userId, total);
+        }
 
 
         //public void AuthorPayloadKnowtify(string sessionKey, string userId, string payload)
@@ -154,20 +160,20 @@ namespace ngFoundrySignal
             Clients.All.SendAsync("receiveMessage", sessionKey, sender, senderId);
         }
 
-        //public void AuthorInvite(string sessionKey, string author, string authorId, string player, string playerId)
-        //{
-        //    Clients.Others.receiveInvitation(sessionKey, player, playerId, author, authorId);
-        //}
+        public void AuthorInvite(string sessionKey, string author, string authorId, string player, string playerId)
+        {
+           Clients.Others.SendAsync("receiveInvitation", sessionKey, player, playerId, author, authorId);
+        }
 
         //public void PlayerRSVP(string sessionKey, string player, string playerId, string author, string authorId, string payload)
         //{
         //    Clients.Others.receiveRSVP(sessionKey, player, playerId, author, authorId, payload);
         //}
 
-        //public void AuthorRequestModelFromPlayer(string sessionKey, string author, string authorId)
-        //{
-        //    Clients.OthersInGroup(sessionKey).sendModelToAuthor(sessionKey, author, authorId);
-        //}
+        public void AuthorRequestModelFromPlayer(string sessionKey, string author, string authorId)
+        {
+           Clients.OthersInGroup(sessionKey).SendAsync("sendModelToAuthor", sessionKey, author, authorId);
+        }
 
         //public void PlayerSendModelToAuthor(string sessionKey, string player, string playerId, string payload)
         //{

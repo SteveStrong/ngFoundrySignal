@@ -22,6 +22,7 @@ namespace ngFoundrySignal
         {
             _chatHubContext = context;
         }
+
         [HttpGet("SayHello")]
         public IActionResult SayHello()
         {
@@ -29,6 +30,7 @@ namespace ngFoundrySignal
             _chatHubContext.Clients.All.SendAsync("send", "Hello from the server");
             return Ok();
         }
+        
         [HttpGet("{message}")]
         public IActionResult Send(string message)
         {
