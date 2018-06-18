@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ngFoundrySignal.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+   [Route("api/[controller]")]
+   [ApiController]
     public class ValuesController : ControllerBase
     {
         // GET api/values

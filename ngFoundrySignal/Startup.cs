@@ -101,6 +101,7 @@ namespace ngFoundrySignal
             
             app.UseDefaultFiles(); 
             app.UseStaticFiles();
+            
             app.UseCookiePolicy();
             app.UseCors("allowAny");
             app.UseSignalR(routes =>
