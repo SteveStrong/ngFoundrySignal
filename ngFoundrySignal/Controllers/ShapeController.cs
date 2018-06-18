@@ -14,20 +14,20 @@ namespace ngFoundrySignal
 {
     [Route("[controller]")]
     [ApiController]
-    public class ChatController : Controller
+    public class ShapeController : Controller
     {
 
-        private IHubContext<ChatHub> _chatHubContext;
-        public ChatController(IHubContext<ChatHub> context)
+        private IHubContext<ShapeHub> _shapeHubContext;
+        public ShapeController(IHubContext<ShapeHub> context)
         {
-            _chatHubContext = context;
+            _shapeHubContext = context;
         }
 
         [HttpGet("SayHello")]
         public IActionResult SayHello()
         {
             //broadcast message to chat
-            _chatHubContext.Clients.All.SendAsync("send", "Hello from the server");
+            _shapeHubContext.Clients.All.SendAsync("send", "Hello from the server");
             return Ok();
         }
         
@@ -35,7 +35,7 @@ namespace ngFoundrySignal
         public IActionResult Send(string message)
         {
             //broadcast message to chat
-            _chatHubContext.Clients.All.SendAsync("send", message);
+            _shapeHubContext.Clients.All.SendAsync("send", message);
             return Ok();
         }
 
@@ -44,7 +44,7 @@ namespace ngFoundrySignal
         public IActionResult SendAll([FromBody]string message)
         {
             //broadcast message to chat
-            _chatHubContext.Clients.All.SendAsync("send", message);
+            _shapeHubContext.Clients.All.SendAsync("send", message);
             return Ok();
         }
     }

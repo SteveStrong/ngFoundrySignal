@@ -39,7 +39,7 @@ namespace ngFoundrySignal
 
         public Task SayHello()
         {
-            return Clients.All.SendAsync("hello");
+            return Clients.All.SendAsync("hello from chathub");
         }
 
         public Task Send(object message)
