@@ -83,59 +83,59 @@ namespace ngFoundrySignal
         }
 
 
-        //public void AuthorPayloadKnowtify(string sessionKey, string userId, string payload)
-        //{
-        //    Clients.OthersInGroup(sessionKey).payloadKnowtify(sessionKey, userId, payload);
-        //}
+        public void AuthorPayloadKnowtify(string sessionKey, string userId, string payload)
+        {
+           Clients.OthersInGroup(sessionKey).SendAsync("payloadKnowtify",sessionKey, userId, payload);
+        }
 
-        //public void AuthorPayloadAdded(string sessionKey, string userId, string payload)
-        //{
-        //    Clients.OthersInGroup(sessionKey).payloadAdded(sessionKey, userId, payload);
-        //}
+        public void AuthorPayloadAdded(string sessionKey, string userId, string payload)
+        {
+           Clients.OthersInGroup(sessionKey).SendAsync("payloadAdded", sessionKey, userId, payload);
+        }
 
-        //public void AuthorPayloadDeleted(string sessionKey, string userId, string payload)
-        //{
-        //    Clients.OthersInGroup(sessionKey).payloadDeleted(sessionKey, userId, payload);
-        //}
+        public void AuthorPayloadDeleted(string sessionKey, string userId, string payload)
+        {
+           Clients.OthersInGroup(sessionKey).SendAsync("payloadDeleted", sessionKey, userId, payload);
+        }
 
-        //public void AuthorChangedModel(string sessionKey, string userId, string payload)
-        //{
-        //    Clients.OthersInGroup(sessionKey).updateModel(sessionKey, userId, payload);
-        //}
+        public void AuthorChangedModel(string sessionKey, string userId, string payload)
+        {
+           Clients.OthersInGroup(sessionKey).SendAsync("updateModel", sessionKey, userId, payload);
+        }
 
-        //public void AuthorReparentModelTo(string sessionKey, string uniqueID, string oldParentID, string newParentID, string location)
-        //{
-        //    Clients.OthersInGroup(sessionKey).parentModelTo(sessionKey, uniqueID, oldParentID, newParentID, location);
-        //}
+        public void AuthorReparentModelTo(string sessionKey, string uniqueID, string oldParentID, string newParentID, string location)
+        {
+           Clients.OthersInGroup(sessionKey).SendAsync("parentModelTo", sessionKey, uniqueID, oldParentID, newParentID, location);
+        }
 
-        //public void AuthorMovedShapeTo(string sessionKey, string uniqueID, double pinX, double pinY, double angle)
-        //{
-        //    Clients.OthersInGroup(sessionKey).repositionShapeTo(sessionKey, uniqueID, pinX, pinY, angle);
-        //}
+        public void AuthorMovedShapeTo(string sessionKey, string uniqueID, double pinX, double pinY, double angle)
+        {
+           Clients.OthersInGroup(sessionKey).SendAsync("repositionShapeTo", sessionKey, uniqueID, pinX, pinY, angle);
+        }
 
         //methods to syncrinize workspaces
 
-        //public async Task PlayerCreateSession(string sessionKey, string userId, string payload)
-        //{
-        //    await JoinSessionGroup(sessionKey);
-        //    Clients.OthersInGroup(sessionKey).authorReceiveJoinSessionFromPlayer(sessionKey, userId, payload);
-        //    Clients.Caller.confirmCreateSession(sessionKey, userId);
-        //}
+        public async Task PlayerCreateSession(string sessionKey, string userId, string payload)
+        {
+           await JoinSessionGroup(sessionKey);
+           await Clients.OthersInGroup(sessionKey).SendAsync("authorReceiveJoinSessionFromPlayer", sessionKey, userId, payload);
+           await Clients.Caller.SendAsync("confirmCreateSession", sessionKey, userId);
+        }
 
-        //public async Task PlayerJoinSession(string sessionKey, string userId, string payload)
-        //{
-        //    await JoinSessionGroup(sessionKey);
-        //    Clients.OthersInGroup(sessionKey).authorReceiveJoinSessionFromPlayer(sessionKey, userId, payload);
-        //    Clients.Caller.confirmJoinSession(sessionKey, userId);
-        //}
+        public async Task PlayerJoinSession(string sessionKey, string userId, string payload)
+        {
+           await JoinSessionGroup(sessionKey);
+           await Clients.OthersInGroup(sessionKey).SendAsync("authorReceiveJoinSessionFromPlayer", sessionKey, userId, payload);
+           await Clients.Caller.SendAsync("confirmJoinSession", sessionKey, userId);
+        }
 
 
-        //public void PlayerExitSession(string sessionKey, string userId, string payload)
-        //{
-        //    Clients.OthersInGroup(sessionKey).receiveExitSessionFromPlayer(sessionKey, userId, payload);
-        //    LeaveSessionGroup(sessionKey);
-        //    Clients.Caller.confirmExitSession(sessionKey, userId);
-        //}
+        public void PlayerExitSession(string sessionKey, string userId, string payload)
+        {
+           Clients.OthersInGroup(sessionKey).SendAsync("receiveExitSessionFromPlayer", sessionKey, userId, payload);
+           LeaveSessionGroup(sessionKey);
+           Clients.Caller.SendAsync("confirmExitSession", sessionKey, userId);
+        }
 
         //public void AuthorResyncSession(string sessionKey, string userId)
         //{
